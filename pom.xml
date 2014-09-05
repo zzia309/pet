@@ -125,10 +125,60 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+	<profiles>
+		<profile>
+			<id>mysql</id>
+			<activation>
+      			<activeByDefault>true</activeByDefault>
+    		</activation>
+    		<properties>
+				<db.profile>mysql</db.profile>
+  			</properties>
+		</profile>
+	</profiles>
 	<build>
   		<finalName>pet</finalName>
+  		<resources>
+  			<resource>
+  				<directory>${basedir}/src/main/resources</directory>
+  				<filtering>true</filtering>
+  				<includes>
+  					<include>datasource-config.xml</include>
+  					<include>spring-config.xml</include>
+  					<include>springmvc-config.xml</include>
+  					<include>logback.xml</include>
+  				</includes>
+  			</resource>
+  			<resource>
+  				<directory>${basedir}/src/main/resources</directory>
+  				<filtering>false</filtering>
+  				<excludes>
+  					<exclude>spring-config.xml</exclude>
+  					<exclude>datasource-config.xml</exclude>
+  					<exclude>springmvc-config.xml</exclude>
+  					<exclude>logback.xml</exclude>
+  				</excludes>
+  			</resource>
+  			<resource>
+	        	<directory>${basedir}/src/main/webapp/WEB-INF</directory>
+        		<includes>
+	          		<include>web.xml</include>
+	        	</includes>
+	        	<filtering>true</filtering>
+	        	<targetPath>${project.build.directory}</targetPath>
+      	</resource>
+  		</resources>
   		<plugins>
+  			<plugin>
+  				<groupId>org.apache.maven.plugins</groupId>
+  				<artifactId>maven-resources-plugin</artifactId>
+  				<version>2.5</version>
+  				<configuration>
+  					<filters>
+  						<filter>${basedir}/etc/${db.profile}.properties</filter>
+  					</filters>
+  				</configuration>
+  			</plugin>
   			<plugin>
   				<groupId>org.apache.maven.plugins</groupId>
   				<artifactId>maven-compiler-plugin</artifactId>
@@ -149,6 +199,11 @@
   				<version>2.4</version>
   				<configuration>
   					<warName>pet</warName>
+  					<archiveClasses>false</archiveClasses>
+  					<filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+  					<filters>
+  						<filter>${basedir}/etc/${db.profile}.properties</filter>
+  					</filters>
   				</configuration>
   			</plugin>
   			<plugin>
@@ -159,6 +214,16 @@
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<server>tomcat-development-server</server>
+					<port>9966</port>
+					<path>/pet</path>
 				</configuration>
 			</plugin>
   		</plugins>

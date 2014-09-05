@@ -1,9 +1,4 @@
-small
-=====
-担保系统开发
-
-yanghui
-
-chenenqi
-
-test
+系统原型框架
+使用技术
+springMVC
+activeJpa
