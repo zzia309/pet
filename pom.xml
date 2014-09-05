@@ -146,6 +146,7 @@
   					<include>datasource-config.xml</include>
   					<include>spring-config.xml</include>
   					<include>springmvc-config.xml</include>
+  					<include>view-config.xml</include>
   					<include>logback.xml</include>
   				</includes>
   			</resource>
@@ -156,6 +157,7 @@
   					<exclude>spring-config.xml</exclude>
   					<exclude>datasource-config.xml</exclude>
   					<exclude>springmvc-config.xml</exclude>
+  					<exclude>view-config.xml</exclude>
   					<exclude>logback.xml</exclude>
   				</excludes>
   			</resource>

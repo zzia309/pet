@@ -12,9 +12,10 @@
        	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
        	http://www.springframework.org/schema/oxm 
         http://www.springframework.org/schema/oxm/spring-oxm-4.0.xsd">
+	<import resource="view-config.xml"/>
 	<context:component-scan base-package="controller"/>
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
+	<mvc:annotation-driven/>
+	<mvc:resources mapping="/resources/**" location="/resources/"/>
+	<mvc:view-controller path="/" view-name="welcome" />
+	<mvc:default-servlet-handler/>
 </beans>
